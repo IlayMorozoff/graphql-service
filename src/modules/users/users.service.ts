@@ -30,10 +30,9 @@ export class UsersService {
     // return this.users;
   }
 
-  findOne(id: number) {
-    // const item = this.users.find((item) => item.id == id);
-    // console.log(this.users[0], item, id);
-    // return this.users[0];
+  async findOne(id: string): Promise<User> {
+    const resp = await this.client.get<unknown, AxiosResponse<User>>(`/${id}`);
+    return resp.data;
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {
