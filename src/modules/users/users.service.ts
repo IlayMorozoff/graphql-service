@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { LoginUserInput } from './dto/login-user.input';
 import { RegisterUserInput } from './dto/register-user.input';
-import { UpdateUserInput } from './dto/update-user.input';
+import { Jwt } from './entities/jwt.entity';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -26,24 +27,18 @@ export class UsersService {
     return resp.data;
   }
 
-  findAll() {
-    // return this.users;
-  }
-
   async findOne(id: string): Promise<User> {
     const resp = await this.client.get<unknown, AxiosResponse<User>>(`/${id}`);
     return resp.data;
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    // const index = this.users.findIndex((item) => item.id === id);
-
-    // this.users[index] = updateUserInput;
-    return updateUserInput;
-  }
-
-  remove(id: number) {
-    // this.users = this.users.filter((item) => item.id !== id);
-    return `This action removes a #${id} user`;
+  async login(loginUserInput: LoginUserInput): Promise<Jwt> {
+    const resp = await this.client.post<LoginUserInput, AxiosResponse<Jwt>>(
+      '/login',
+      {
+        ...loginUserInput,
+      },
+    );
+    return resp.data;
   }
 }
