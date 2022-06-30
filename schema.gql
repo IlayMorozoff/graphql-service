@@ -2,6 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Jwt {
+  jwt: String!
+}
+
 type User {
   _id: ID!
   firstName: String
@@ -11,17 +15,30 @@ type User {
   email: String!
 }
 
-type Jwt {
-  jwt: String!
+type Artist {
+  _id: ID!
+  firstName: String!
+  secondName: String!
+  middleName: String
+  birthDate: String
+  birthPlace: String
+  country: String
+  bandsIds: [ID!]
+  instruments: [ID!]
 }
 
 type Query {
   user(id: String!): User!
+  artists: [Artist!]!
+  artist(id: String!): Artist!
 }
 
 type Mutation {
   register(registerUserInput: RegisterUserInput!): User!
   jwt(loginUserInput: LoginUserInput!): Jwt!
+  createArtist(createArtistInput: CreateArtistInput!): Artist!
+  updateArtist(updateArtistInput: UpdateArtistInput!): Artist!
+  deleteArtist(id: String!): Artist!
 }
 
 input RegisterUserInput {
@@ -35,4 +52,27 @@ input RegisterUserInput {
 input LoginUserInput {
   password: String!
   email: String!
+}
+
+input CreateArtistInput {
+  firstName: String!
+  secondName: String!
+  middleName: String
+  birthDate: String
+  birthPlace: String
+  country: String!
+  bandsIds: [ID!]
+  instruments: [ID!]
+}
+
+input UpdateArtistInput {
+  firstName: String
+  secondName: String
+  middleName: String
+  birthDate: String
+  birthPlace: String
+  country: String
+  bandsIds: [ID!]
+  instruments: [ID!]
+  _id: ID!
 }

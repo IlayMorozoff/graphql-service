@@ -5,7 +5,6 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
-import { ArtistsModule } from './src/modules/artists/artists.module';
 import { ArtistsModule } from './modules/artists/artists.module';
 
 @Module({

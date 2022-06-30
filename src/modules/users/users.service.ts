@@ -23,7 +23,6 @@ export class UsersService {
         ...registerUserInput,
       },
     );
-
     return resp.data;
   }
 
