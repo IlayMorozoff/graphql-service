@@ -27,10 +27,22 @@ type Artist {
   instruments: [ID!]
 }
 
+type Band {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   user(id: String!): User!
-  artists: [Artist!]!
+  artists(pagingArtistInput: PagingArtistInput): [Artist!]!
   artist(id: String!): Artist!
+  bands: [Band!]!
+  band(id: Int!): Band!
+}
+
+input PagingArtistInput {
+  limit: Int = 5
+  offset: Int = 0
 }
 
 type Mutation {
@@ -39,6 +51,9 @@ type Mutation {
   createArtist(createArtistInput: CreateArtistInput!): Artist!
   updateArtist(updateArtistInput: UpdateArtistInput!): Artist!
   deleteArtist(id: String!): Artist!
+  createBand(createBandInput: CreateBandInput!): Band!
+  updateBand(updateBandInput: UpdateBandInput!): Band!
+  removeBand(id: Int!): Band!
 }
 
 input RegisterUserInput {
@@ -75,4 +90,15 @@ input UpdateArtistInput {
   bandsIds: [ID!]
   instruments: [ID!]
   _id: ID!
+}
+
+input CreateBandInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateBandInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }

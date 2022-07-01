@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { CreateArtistInput } from './dto/create-artist.input';
+import { PagingArtistInput } from './dto/paging-artist.input';
 import { UpdateArtistInput } from './dto/update-artist.input';
 import { Artist } from './entities/artist.entity';
 
@@ -39,21 +40,54 @@ export class ArtistsService {
     return resp.data;
   }
 
-  findAll() {
-    return `This action returns all artists`;
+  async findAll(pagingArtistInput?: PagingArtistInput): Promise<Artist[]> {
+    const queryParams = pagingArtistInput
+      ? `?limit=${pagingArtistInput.limit}&offset=${pagingArtistInput.offset}`
+      : '';
+
+    const resp = await this.client.get(queryParams);
+
+    return resp.data.items;
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Artist> {
     const resp = await this.client.get(`/${id}`);
 
     return resp.data;
   }
 
-  update(id: string, updateArtistInput: UpdateArtistInput, token: string) {
-    return `This action updates a #${id} artist`;
+  async update(
+    id: string,
+    updateArtistInput: UpdateArtistInput,
+    token: string,
+  ): Promise<Artist> {
+    const headers = {
+      authorization: token,
+    };
+
+    const resp = await this.client.put(
+      `${id}`,
+      {
+        ...updateArtistInput,
+      },
+      {
+        headers,
+      },
+    );
+    return resp.data;
   }
 
-  remove(id: string, token: string) {
-    return `This action removes a #${id} artist`;
+  async remove(id: string, token: string) {
+    const headers = {
+      authorization: token,
+    };
+    const resp = await this.client.delete(`${id}`, {
+      headers,
+    });
+
+    if (resp.data.acknowledged && resp.data.deletedCount === 1) {
+      return { _id: id };
+    }
+    return resp;
   }
 }
