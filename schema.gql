@@ -8,8 +8,8 @@ type Jwt {
 
 type User {
   _id: ID!
-  firstName: String
-  secondName: String
+  firstName: String!
+  secondName: String!
   middleName: String
   password: String!
   email: String!
@@ -50,6 +50,36 @@ type Genre {
   year: Int
 }
 
+type DeletedTrack {
+  _id: ID!
+}
+
+type Track {
+  _id: ID!
+  title: String!
+  albums: [Album]
+  bands: [Band]
+  duration: Int
+  released: Int
+  genres: [Genre]
+  artists: [Artist]
+}
+
+type DeletedAlbum {
+  _id: ID!
+}
+
+type Album {
+  _id: ID!
+  name: String!
+  released: Int
+  artists: [Artist]
+  bands: [Band]
+  tracks: [Track]
+  genres: [Genre]
+  image: String
+}
+
 type Query {
   user(id: String!): User!
   artists(pagingArtistInput: PagingArtistInput): [Artist]
@@ -58,6 +88,10 @@ type Query {
   band(id: String!): Band!
   genres(pagingGenreInput: PagingGenreInput): [Genre]
   genre(id: String!): Genre!
+  tracks(pagingGenreInput: PagingTrackInput): [Track]
+  track(id: String!): Track!
+  albums(pagingGenreInput: PagingAlbumInput): [Album]
+  album(id: String!): Album!
 }
 
 input PagingArtistInput {
@@ -75,6 +109,16 @@ input PagingGenreInput {
   offset: Int = 0
 }
 
+input PagingTrackInput {
+  limit: Int = 5
+  offset: Int = 0
+}
+
+input PagingAlbumInput {
+  limit: Int = 5
+  offset: Int = 0
+}
+
 type Mutation {
   register(registerUserInput: RegisterUserInput!): User!
   jwt(loginUserInput: LoginUserInput!): Jwt!
@@ -87,6 +131,12 @@ type Mutation {
   createGenre(createGenreInput: CreateGenreInput!): Genre!
   updateGenre(updateGenreInput: UpdateGenreInput!): Genre!
   deleteGenre(id: String!): Genre!
+  createTrack(createTrackInput: CreateTrackInput!): Track!
+  updateTrack(updateTrackInput: UpdateTrackInput!): Track!
+  deleteTrack(id: String!): DeletedTrack!
+  createAlbum(createAlbumInput: CreateAlbumInput!): Album!
+  updateAlbum(updateAlbumInput: UpdateAlbumInput!): Album!
+  deleteAlbum(id: String!): DeletedAlbum!
 }
 
 input RegisterUserInput {
@@ -161,4 +211,46 @@ input UpdateGenreInput {
   country: String
   year: Int
   _id: String!
+}
+
+input CreateTrackInput {
+  title: String!
+  albumId: String
+  bandsIds: [ID]
+  artistsIds: [ID]
+  duration: Int
+  released: Int
+  genresIds: [ID]
+}
+
+input UpdateTrackInput {
+  title: String
+  albumId: String
+  bandsIds: [ID!]
+  artistsIds: [ID!]
+  duration: Int
+  released: Int
+  genresIds: [ID!]
+  _id: ID!
+}
+
+input CreateAlbumInput {
+  name: String!
+  released: Int
+  artistsIds: [ID]
+  bandsIds: [ID]
+  trackIds: [ID]
+  genresIds: [ID]
+  image: String
+}
+
+input UpdateAlbumInput {
+  name: String
+  released: Int
+  artistsIds: [ID!]
+  bandsIds: [ID!]
+  trackIds: [ID!]
+  genresIds: [ID!]
+  image: String
+  _id: ID!
 }

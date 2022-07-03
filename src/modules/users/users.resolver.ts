@@ -11,7 +11,6 @@ export class UsersResolver {
 
   @Mutation(() => User)
   register(@Args('registerUserInput') registerUserInput: RegisterUserInput) {
-    console.log(registerUserInput);
     return this.usersService.create(registerUserInput);
   }
 

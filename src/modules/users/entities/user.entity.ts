@@ -5,18 +5,18 @@ export class User {
   @Field(() => ID)
   _id: string;
 
-  @Field(() => String, { nullable: true })
+  @Field()
   firstName: string;
 
-  @Field(() => String, { name: 'secondName', nullable: true })
+  @Field({ name: 'secondName' })
   lastName: string;
 
-  @Field(() => String, { nullable: true })
+  @Field({ nullable: true })
   middleName?: string;
 
-  @Field(() => String)
+  @Field()
   password: string;
 
-  @Field(() => String)
+  @Field()
   email: string;
 }

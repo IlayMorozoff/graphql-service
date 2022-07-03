@@ -8,6 +8,8 @@ import { UsersModule } from './modules/users/users.module';
 import { ArtistsModule } from './modules/artists/artists.module';
 import { BandsModule } from './modules/bands/bands.module';
 import { GenresModule } from './modules/genres/genres.module';
+import { TracksModule } from './modules/tracks/tracks.module';
+import { AlbumsModule } from './modules/albums/albums.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { GenresModule } from './modules/genres/genres.module';
     ArtistsModule,
     BandsModule,
     GenresModule,
+    TracksModule,
+    AlbumsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
