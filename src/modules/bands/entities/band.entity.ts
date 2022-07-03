@@ -3,7 +3,7 @@ import { Member } from './member.entity';
 
 @ObjectType()
 export class Band {
-  @Field(() => ID)
+  @Field(() => ID, { name: 'id' })
   _id: string;
 
   @Field()

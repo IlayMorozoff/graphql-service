@@ -3,6 +3,6 @@ import { InputType, Field, PartialType, ID } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateAlbumInput extends PartialType(CreateAlbumInput) {
-  @Field(() => ID)
+  @Field(() => ID, { name: 'id' })
   _id: string;
 }

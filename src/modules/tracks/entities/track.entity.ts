@@ -2,7 +2,7 @@ import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 
 @ObjectType()
 export class DeletedTrack {
-  @Field(() => ID)
+  @Field(() => ID, { name: 'id' })
   _id: string;
 }
 
@@ -29,24 +29,3 @@ export class Track extends DeletedTrack {
   @Field(() => [ID], { nullable: 'itemsAndList', name: 'artists' })
   artistsIds?: string[];
 }
-
-// @Prop({ required: true })
-// title: string;
-
-// @Prop()
-// albumId: string;
-
-// @Prop()
-// bandsIds: string[];
-
-// @Prop()
-// artistsIds: string[];
-
-// @Prop()
-// duration: number;
-
-// @Prop()
-// released: number;
-
-// @Prop()
-// genresIds: string[];

@@ -16,7 +16,7 @@ type User {
 }
 
 type Artist {
-  _id: ID!
+  id: ID!
   firstName: String!
   secondName: String!
   middleName: String
@@ -34,7 +34,7 @@ type Member {
 }
 
 type Band {
-  _id: ID!
+  id: ID!
   name: String!
   origin: String
   members: [Member]
@@ -43,7 +43,7 @@ type Band {
 }
 
 type Genre {
-  _id: ID!
+  id: ID!
   name: String!
   description: String
   country: String
@@ -51,11 +51,11 @@ type Genre {
 }
 
 type DeletedTrack {
-  _id: ID!
+  id: ID!
 }
 
 type Track {
-  _id: ID!
+  id: ID!
   title: String!
   albums: [Album]
   bands: [Band]
@@ -66,11 +66,11 @@ type Track {
 }
 
 type DeletedAlbum {
-  _id: ID!
+  id: ID!
 }
 
 type Album {
-  _id: ID!
+  id: ID!
   name: String!
   released: Int
   artists: [Artist]
@@ -78,6 +78,15 @@ type Album {
   tracks: [Track]
   genres: [Genre]
   image: String
+}
+
+type Favourite {
+  _id: ID!
+  userId: ID!
+  bandsIds: ID!
+  genresIds: ID!
+  artistsIds: ID!
+  tracksIds: ID!
 }
 
 type Query {
@@ -92,6 +101,7 @@ type Query {
   track(id: String!): Track!
   albums(pagingGenreInput: PagingAlbumInput): [Album]
   album(id: String!): Album!
+  favourites: [Favourite!]!
 }
 
 input PagingArtistInput {
@@ -137,11 +147,12 @@ type Mutation {
   createAlbum(createAlbumInput: CreateAlbumInput!): Album!
   updateAlbum(updateAlbumInput: UpdateAlbumInput!): Album!
   deleteAlbum(id: String!): DeletedAlbum!
+  addTrackToFavourites(addToFavouritesInput: AddToFavouritesInput!): Favourite!
 }
 
 input RegisterUserInput {
-  firstName: String
-  lastName: String
+  firstName: String!
+  lastName: String!
   middleName: String
   password: String!
   email: String!
@@ -172,7 +183,7 @@ input UpdateArtistInput {
   country: String
   bandsIds: [ID!]
   instruments: [ID!]
-  _id: ID!
+  id: ID!
 }
 
 input CreateBandInput {
@@ -195,7 +206,7 @@ input UpdateBandInput {
   members: [CreateMemberInput!]
   website: String
   genresIds: [ID!]
-  _id: ID!
+  id: ID!
 }
 
 input CreateGenreInput {
@@ -210,7 +221,7 @@ input UpdateGenreInput {
   description: String
   country: String
   year: Int
-  _id: String!
+  id: ID!
 }
 
 input CreateTrackInput {
@@ -231,7 +242,7 @@ input UpdateTrackInput {
   duration: Int
   released: Int
   genresIds: [ID!]
-  _id: ID!
+  id: ID!
 }
 
 input CreateAlbumInput {
@@ -252,5 +263,10 @@ input UpdateAlbumInput {
   trackIds: [ID!]
   genresIds: [ID!]
   image: String
-  _id: ID!
+  id: ID!
+}
+
+input AddToFavouritesInput {
+  id: ID!
+  type: String!
 }

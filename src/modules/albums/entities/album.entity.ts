@@ -2,7 +2,7 @@ import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 
 @ObjectType()
 export class DeletedAlbum {
-  @Field(() => ID)
+  @Field(() => ID, { name: 'id' })
   _id: string;
 }
 
