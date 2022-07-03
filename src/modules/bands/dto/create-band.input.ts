@@ -1,7 +1,20 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field, ID } from '@nestjs/graphql';
+import { CreateMemberInput } from './create-member.input';
 
 @InputType()
 export class CreateBandInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field()
+  name: string;
+
+  @Field({ nullable: true })
+  origin?: string;
+
+  @Field(() => [CreateMemberInput], { nullable: 'itemsAndList' })
+  members?: CreateMemberInput[];
+
+  @Field({ nullable: true })
+  website?: string;
+
+  @Field(() => [ID], { nullable: 'itemsAndList' })
+  genresIds?: string[];
 }

@@ -23,24 +23,54 @@ type Artist {
   birthDate: String
   birthPlace: String
   country: String
-  bandsIds: [ID!]
-  instruments: [ID!]
+  bands: [Band]
+  instruments: [ID]
+}
+
+type Member {
+  artist: String
+  instrument: String
+  years: [String]
 }
 
 type Band {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  _id: ID!
+  name: String!
+  origin: String
+  members: [Member]
+  website: String
+  genres: [Genre]
+}
+
+type Genre {
+  _id: ID!
+  name: String!
+  description: String
+  country: String
+  year: Int
 }
 
 type Query {
   user(id: String!): User!
-  artists(pagingArtistInput: PagingArtistInput): [Artist!]!
+  artists(pagingArtistInput: PagingArtistInput): [Artist]
   artist(id: String!): Artist!
-  bands: [Band!]!
-  band(id: Int!): Band!
+  bands(pagingBandInput: PagingBandInput): [Band]
+  band(id: String!): Band!
+  genres(pagingGenreInput: PagingGenreInput): [Genre]
+  genre(id: String!): Genre!
 }
 
 input PagingArtistInput {
+  limit: Int = 5
+  offset: Int = 0
+}
+
+input PagingBandInput {
+  limit: Int = 5
+  offset: Int = 0
+}
+
+input PagingGenreInput {
   limit: Int = 5
   offset: Int = 0
 }
@@ -53,7 +83,10 @@ type Mutation {
   deleteArtist(id: String!): Artist!
   createBand(createBandInput: CreateBandInput!): Band!
   updateBand(updateBandInput: UpdateBandInput!): Band!
-  removeBand(id: Int!): Band!
+  deleteBand(id: String!): Band
+  createGenre(createGenreInput: CreateGenreInput!): Genre!
+  updateGenre(updateGenreInput: UpdateGenreInput!): Genre!
+  deleteGenre(id: String!): Genre!
 }
 
 input RegisterUserInput {
@@ -93,12 +126,39 @@ input UpdateArtistInput {
 }
 
 input CreateBandInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  origin: String
+  members: [CreateMemberInput]
+  website: String
+  genresIds: [ID]
+}
+
+input CreateMemberInput {
+  artist: String
+  instrument: String
+  years: [String]
 }
 
 input UpdateBandInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  name: String
+  origin: String
+  members: [CreateMemberInput!]
+  website: String
+  genresIds: [ID!]
+  _id: ID!
+}
+
+input CreateGenreInput {
+  name: String!
+  description: String
+  country: String
+  year: Int
+}
+
+input UpdateGenreInput {
+  name: String
+  description: String
+  country: String
+  year: Int
+  _id: String!
 }

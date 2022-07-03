@@ -1,48 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { CreateArtistInput } from './dto/create-artist.input';
-import { PagingArtistInput } from './dto/paging-artist.input';
-import { UpdateArtistInput } from './dto/update-artist.input';
-import { Artist } from './entities/artist.entity';
+import { CreateGenreInput } from './dto/create-genre.input';
+import { PagingGenreInput } from './dto/paging-genre.input';
+import { UpdateGenreInput } from './dto/update-genre.input';
+import { Genre } from './entities/genre.entity';
 
 @Injectable()
-export class ArtistsService {
+export class GenresService {
   private client: AxiosInstance;
 
   constructor(private config: ConfigService) {
     this.client = axios.create({
-      baseURL: this.config.get('URL_ARTISTS'),
+      baseURL: this.config.get('URL_GENRES'),
     });
   }
 
-  async create(
-    createArtistInput: CreateArtistInput,
-    token: string,
-  ): Promise<Artist> {
+  async create(createGenreInput: CreateGenreInput, token: string) {
     const headers = {
       authorization: token,
     };
 
-    const resp = await this.client.post<
-      CreateArtistInput,
-      AxiosResponse<Artist>
-    >(
+    const resp = await this.client.post<CreateGenreInput, AxiosResponse<Genre>>(
       '',
       {
-        ...createArtistInput,
+        ...createGenreInput,
       },
       {
         headers,
       },
     );
-
     return resp.data;
   }
 
-  async findAll(pagingArtistInput?: PagingArtistInput): Promise<Artist[]> {
-    const queryParams = pagingArtistInput
-      ? `?limit=${pagingArtistInput.limit}&offset=${pagingArtistInput.offset}`
+  async findAll(pagingGenreInput?: PagingGenreInput) {
+    const queryParams = pagingGenreInput
+      ? `?limit=${pagingGenreInput.limit}&offset=${pagingGenreInput.offset}`
       : '';
 
     const resp = await this.client.get(queryParams);
@@ -50,25 +43,21 @@ export class ArtistsService {
     return resp.data.items;
   }
 
-  async findOne(id: string): Promise<Artist> {
+  async findOne(id: string) {
     const resp = await this.client.get(`/${id}`);
 
     return resp.data;
   }
 
-  async update(
-    id: string,
-    updateArtistInput: UpdateArtistInput,
-    token: string,
-  ): Promise<Artist> {
+  async update(id: string, updateGenreInput: UpdateGenreInput, token: string) {
     const headers = {
       authorization: token,
     };
 
-    const resp = await this.client.put(
-      `${id}`,
+    const resp = await this.client.put<UpdateGenreInput, AxiosResponse<Genre>>(
+      `/${id}`,
       {
-        ...updateArtistInput,
+        ...updateGenreInput,
       },
       {
         headers,
