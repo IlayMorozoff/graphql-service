@@ -43,7 +43,7 @@ export class TracksResolver {
 
   @Query(() => [Track], { name: 'tracks', nullable: 'itemsAndList' })
   findAll(
-    @Args('pagingGenreInput', { nullable: true })
+    @Args('pagingTrackInput', { nullable: true })
     pagingTrackInput?: PagingTrackInput,
   ) {
     return this.tracksService.findAll(pagingTrackInput);

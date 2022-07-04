@@ -1,25 +1,63 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import axios, { AxiosInstance } from 'axios';
 import { AddToFavouritesInput } from './dto/add-to-favourites.input';
+import { RemoveFromFavouritesInput } from './dto/remove-from-favourites.input';
 
 @Injectable()
 export class FavouritesService {
-  add(addToFavouritesInput: AddToFavouritesInput) {
-    return 'This action adds a new favourite';
+  private client: AxiosInstance;
+
+  constructor(private config: ConfigService) {
+    this.client = axios.create({
+      baseURL: this.config.get('URL_FAVOURITES'),
+    });
   }
 
-  findAll() {
-    return `This action returns all favourites`;
+  async add(addToFavouritesInput: AddToFavouritesInput, token: string) {
+    const headers = {
+      authorization: token,
+    };
+
+    const resp = await this.client.put(
+      '/add',
+      {
+        ...addToFavouritesInput,
+      },
+      {
+        headers,
+      },
+    );
+
+    return resp.data;
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} favourite`;
+  async findAll(token: string) {
+    const headers = {
+      authorization: token,
+    };
+    const resp = await this.client.get('', { headers });
+    return resp.data;
   }
 
-  update(id: string) {
-    return `This action updates a #${id} favourite`;
-  }
+  async remove(
+    removeFromFavouritesInput: RemoveFromFavouritesInput,
+    token: string,
+  ) {
+    const headers = {
+      authorization: token,
+    };
 
-  remove(id: string) {
-    return `This action removes a #${id} favourite`;
+    const resp = await this.client.put(
+      '/remove',
+      {
+        ...removeFromFavouritesInput,
+      },
+      {
+        headers,
+      },
+    );
+
+    return resp.data;
   }
 }

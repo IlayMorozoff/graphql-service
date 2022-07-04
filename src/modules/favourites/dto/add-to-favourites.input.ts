@@ -6,5 +6,5 @@ export class AddToFavouritesInput {
   id: string;
 
   @Field(() => String)
-  type: 'band' | 'genre' | 'artist' | 'track';
+  type: 'bands' | 'genres' | 'artist' | 'tracks';
 }

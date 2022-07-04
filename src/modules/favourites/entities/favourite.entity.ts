@@ -8,15 +8,15 @@ export class Favourite {
   @Field(() => ID)
   userId: string;
 
-  @Field(() => ID)
+  @Field(() => [ID])
   bandsIds: string[];
 
-  @Field(() => ID)
+  @Field(() => [ID])
   genresIds: string[];
 
-  @Field(() => ID)
+  @Field(() => [ID])
   artistsIds: string[];
 
-  @Field(() => ID)
+  @Field(() => [ID])
   tracksIds: string[];
 }

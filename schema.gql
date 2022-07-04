@@ -83,10 +83,10 @@ type Album {
 type Favourite {
   _id: ID!
   userId: ID!
-  bandsIds: ID!
-  genresIds: ID!
-  artistsIds: ID!
-  tracksIds: ID!
+  bandsIds: [ID!]!
+  genresIds: [ID!]!
+  artistsIds: [ID!]!
+  tracksIds: [ID!]!
 }
 
 type Query {
@@ -97,11 +97,11 @@ type Query {
   band(id: String!): Band!
   genres(pagingGenreInput: PagingGenreInput): [Genre]
   genre(id: String!): Genre!
-  tracks(pagingGenreInput: PagingTrackInput): [Track]
+  tracks(pagingTrackInput: PagingTrackInput): [Track]
   track(id: String!): Track!
   albums(pagingGenreInput: PagingAlbumInput): [Album]
   album(id: String!): Album!
-  favourites: [Favourite!]!
+  favourites: Favourite!
 }
 
 input PagingArtistInput {
@@ -147,7 +147,14 @@ type Mutation {
   createAlbum(createAlbumInput: CreateAlbumInput!): Album!
   updateAlbum(updateAlbumInput: UpdateAlbumInput!): Album!
   deleteAlbum(id: String!): DeletedAlbum!
-  addTrackToFavourites(addToFavouritesInput: AddToFavouritesInput!): Favourite!
+  addTrackToFavourites(idTrack: String!): Favourite!
+  addBandToFavourites(idBand: String!): Favourite!
+  addArtistToFavourites(idArtist: String!): Favourite!
+  addGenreToFavourites(idGenre: String!): Favourite!
+  removeTrackFromFavourites(idTrack: String!): Favourite!
+  removeBandFromFavourites(idBand: String!): Favourite!
+  removeArtistFromFavourites(idArtist: String!): Favourite!
+  removeGenreFromFavourites(idGenre: String!): Favourite!
 }
 
 input RegisterUserInput {
@@ -264,9 +271,4 @@ input UpdateAlbumInput {
   genresIds: [ID!]
   image: String
   id: ID!
-}
-
-input AddToFavouritesInput {
-  id: ID!
-  type: String!
 }
