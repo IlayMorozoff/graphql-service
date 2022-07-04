@@ -15,49 +15,61 @@ export class FavouritesService {
   }
 
   async add(addToFavouritesInput: AddToFavouritesInput, token: string) {
-    const headers = {
-      authorization: token,
-    };
+    try {
+      const headers = {
+        authorization: token || '',
+      };
 
-    const resp = await this.client.put(
-      '/add',
-      {
-        ...addToFavouritesInput,
-      },
-      {
-        headers,
-      },
-    );
+      const resp = await this.client.put(
+        '/add',
+        {
+          ...addToFavouritesInput,
+        },
+        {
+          headers,
+        },
+      );
 
-    return resp.data;
+      return resp.data;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async findAll(token: string) {
-    const headers = {
-      authorization: token,
-    };
-    const resp = await this.client.get('', { headers });
-    return resp.data;
+    try {
+      const headers = {
+        authorization: token || '',
+      };
+      const resp = await this.client.get('', { headers });
+      return resp.data;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async remove(
     removeFromFavouritesInput: RemoveFromFavouritesInput,
     token: string,
   ) {
-    const headers = {
-      authorization: token,
-    };
+    try {
+      const headers = {
+        authorization: token || '',
+      };
 
-    const resp = await this.client.put(
-      '/remove',
-      {
-        ...removeFromFavouritesInput,
-      },
-      {
-        headers,
-      },
-    );
+      const resp = await this.client.put(
+        '/remove',
+        {
+          ...removeFromFavouritesInput,
+        },
+        {
+          headers,
+        },
+      );
 
-    return resp.data;
+      return resp.data;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 }

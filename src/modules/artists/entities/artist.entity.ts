@@ -1,10 +1,13 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 
 @ObjectType()
-export class Artist {
+export class DeletedArtist {
   @Field(() => ID, { name: 'id' })
   _id: string;
+}
 
+@ObjectType()
+export class Artist extends DeletedArtist {
   @Field()
   firstName: string;
 

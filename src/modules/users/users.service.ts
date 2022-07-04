@@ -17,27 +17,41 @@ export class UsersService {
   }
 
   async create(registerUserInput: RegisterUserInput): Promise<User> {
-    const resp = await this.client.post<RegisterUserInput, AxiosResponse<User>>(
-      '/register',
-      {
+    try {
+      const resp = await this.client.post<
+        RegisterUserInput,
+        AxiosResponse<User>
+      >('/register', {
         ...registerUserInput,
-      },
-    );
-    return resp.data;
+      });
+      return resp.data;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async findOne(id: string): Promise<User> {
-    const resp = await this.client.get<unknown, AxiosResponse<User>>(`/${id}`);
-    return resp.data;
+    try {
+      const resp = await this.client.get<unknown, AxiosResponse<User>>(
+        `/${id}`,
+      );
+      return resp.data;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async login(loginUserInput: LoginUserInput): Promise<Jwt> {
-    const resp = await this.client.post<LoginUserInput, AxiosResponse<Jwt>>(
-      '/login',
-      {
-        ...loginUserInput,
-      },
-    );
-    return resp.data;
+    try {
+      const resp = await this.client.post<LoginUserInput, AxiosResponse<Jwt>>(
+        '/login',
+        {
+          ...loginUserInput,
+        },
+      );
+      return resp.data;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
 import { Request } from 'express';
 import { GenresService } from './genres.service';
-import { Genre } from './entities/genre.entity';
+import { DeletedGenre, Genre } from './entities/genre.entity';
 import { CreateGenreInput } from './dto/create-genre.input';
 import { UpdateGenreInput } from './dto/update-genre.input';
 import { PagingGenreInput } from './dto/paging-genre.input';
@@ -45,7 +45,7 @@ export class GenresResolver {
     );
   }
 
-  @Mutation(() => Genre)
+  @Mutation(() => DeletedGenre)
   deleteGenre(
     @Args('id', { type: () => String }) id: string,
     @Context('req') req: Request,

@@ -9,7 +9,7 @@ import {
 } from '@nestjs/graphql';
 import { Request } from 'express';
 import { ArtistsService } from './artists.service';
-import { Artist } from './entities/artist.entity';
+import { Artist, DeletedArtist } from './entities/artist.entity';
 import { CreateArtistInput } from './dto/create-artist.input';
 import { UpdateArtistInput } from './dto/update-artist.input';
 import { PagingArtistInput } from './dto/paging-artist.input';
@@ -58,7 +58,7 @@ export class ArtistsResolver {
     );
   }
 
-  @Mutation(() => Artist)
+  @Mutation(() => DeletedArtist)
   deleteArtist(@Args('id') id: string, @Context('req') req: Request) {
     const token = req.headers.authorization;
     return this.artistsService.remove(id, token);

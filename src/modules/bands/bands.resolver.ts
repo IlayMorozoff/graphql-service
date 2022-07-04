@@ -9,7 +9,7 @@ import {
 } from '@nestjs/graphql';
 import { Request } from 'express';
 import { BandsService } from './bands.service';
-import { Band } from './entities/band.entity';
+import { Band, DeletedBand } from './entities/band.entity';
 import { CreateBandInput } from './dto/create-band.input';
 import { UpdateBandInput } from './dto/update-band.input';
 import { PagingBandInput } from './dto/paging-band.input';
@@ -58,7 +58,7 @@ export class BandsResolver {
     );
   }
 
-  @Mutation(() => Band, { nullable: true })
+  @Mutation(() => DeletedBand)
   deleteBand(@Args('id') id: string, @Context('req') req: Request) {
     const token = req.headers.authorization;
     return this.bandsService.remove(id, token);

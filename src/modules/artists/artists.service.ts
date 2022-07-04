@@ -20,34 +20,42 @@ export class ArtistsService {
     createArtistInput: CreateArtistInput,
     token: string,
   ): Promise<Artist> {
-    const headers = {
-      authorization: token,
-    };
+    try {
+      const headers = {
+        authorization: token,
+      };
 
-    const resp = await this.client.post<
-      CreateArtistInput,
-      AxiosResponse<Artist>
-    >(
-      '',
-      {
-        ...createArtistInput,
-      },
-      {
-        headers,
-      },
-    );
+      const resp = await this.client.post<
+        CreateArtistInput,
+        AxiosResponse<Artist>
+      >(
+        '',
+        {
+          ...createArtistInput,
+        },
+        {
+          headers,
+        },
+      );
 
-    return resp.data;
+      return resp.data;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async findAll(pagingArtistInput?: PagingArtistInput): Promise<Artist[]> {
-    const queryParams = pagingArtistInput
-      ? `?limit=${pagingArtistInput.limit}&offset=${pagingArtistInput.offset}`
-      : '';
+    try {
+      const queryParams = pagingArtistInput
+        ? `?limit=${pagingArtistInput.limit}&offset=${pagingArtistInput.offset}`
+        : '';
 
-    const resp = await this.client.get(queryParams);
+      const resp = await this.client.get(queryParams);
 
-    return resp.data.items;
+      return resp.data.items;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async findOne(id: string): Promise<Artist> {
@@ -61,33 +69,41 @@ export class ArtistsService {
     updateArtistInput: UpdateArtistInput,
     token: string,
   ): Promise<Artist> {
-    const headers = {
-      authorization: token,
-    };
+    try {
+      const headers = {
+        authorization: token,
+      };
 
-    const resp = await this.client.put(
-      `${id}`,
-      {
-        ...updateArtistInput,
-      },
-      {
-        headers,
-      },
-    );
-    return resp.data;
+      const resp = await this.client.put(
+        `${id}`,
+        {
+          ...updateArtistInput,
+        },
+        {
+          headers,
+        },
+      );
+      return resp.data;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async remove(id: string, token: string) {
-    const headers = {
-      authorization: token,
-    };
-    const resp = await this.client.delete(`/${id}`, {
-      headers,
-    });
+    try {
+      const headers = {
+        authorization: token,
+      };
+      const resp = await this.client.delete(`/${id}`, {
+        headers,
+      });
 
-    if (resp.data.acknowledged && resp.data.deletedCount === 1) {
-      return { _id: id };
+      if (resp.data.acknowledged && resp.data.deletedCount === 1) {
+        return { _id: id };
+      }
+      return resp;
+    } catch (error) {
+      console.log(error.message);
     }
-    return resp;
   }
 }

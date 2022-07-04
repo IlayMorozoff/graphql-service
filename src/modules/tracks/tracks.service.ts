@@ -17,66 +17,92 @@ export class TracksService {
   }
 
   async create(createTrackInput: CreateTrackInput, token: string) {
-    const headers = {
-      authorization: token,
-    };
+    try {
+      const headers = {
+        authorization: token || '',
+      };
 
-    const resp = await this.client.post<CreateTrackInput, AxiosResponse<Track>>(
-      '',
-      {
-        ...createTrackInput,
-      },
-      {
-        headers,
-      },
-    );
-    return resp.data;
+      const resp = await this.client.post<
+        CreateTrackInput,
+        AxiosResponse<Track>
+      >(
+        '',
+        {
+          ...createTrackInput,
+        },
+        {
+          headers,
+        },
+      );
+      return resp.data;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async findAll(pagingTrackInput?: PagingTrackInput) {
-    const queryParams = pagingTrackInput
-      ? `?limit=${pagingTrackInput.limit}&offset=${pagingTrackInput.offset}`
-      : '';
+    try {
+      const queryParams = pagingTrackInput
+        ? `?limit=${pagingTrackInput.limit}&offset=${pagingTrackInput.offset}`
+        : '';
 
-    const resp = await this.client.get(queryParams);
+      const resp = await this.client.get(queryParams);
 
-    return resp.data.items;
+      return resp.data.items;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async findOne(id: string) {
-    const resp = await this.client.get(`/${id}`);
+    try {
+      const resp = await this.client.get(`/${id}`);
 
-    return resp.data;
+      return resp.data;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async update(id: string, updateTrackInput: UpdateTrackInput, token: string) {
-    const headers = {
-      authorization: token,
-    };
+    try {
+      const headers = {
+        authorization: token || '',
+      };
 
-    const resp = await this.client.put<UpdateTrackInput, AxiosResponse<Track>>(
-      `/${id}`,
-      {
-        ...updateTrackInput,
-      },
-      {
-        headers,
-      },
-    );
-    return resp.data;
+      const resp = await this.client.put<
+        UpdateTrackInput,
+        AxiosResponse<Track>
+      >(
+        `/${id}`,
+        {
+          ...updateTrackInput,
+        },
+        {
+          headers,
+        },
+      );
+      return resp.data;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async remove(id: string, token: string) {
-    const headers = {
-      authorization: token,
-    };
-    const resp = await this.client.delete(`/${id}`, {
-      headers,
-    });
+    try {
+      const headers = {
+        authorization: token,
+      };
+      const resp = await this.client.delete(`/${id}`, {
+        headers,
+      });
 
-    if (resp.data.acknowledged && resp.data.deletedCount === 1) {
-      return { _id: id };
+      if (resp.data.acknowledged && resp.data.deletedCount === 1) {
+        return { _id: id };
+      }
+      return resp;
+    } catch (error) {
+      console.log(error.message);
     }
-    return resp;
   }
 }
