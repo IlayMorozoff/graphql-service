@@ -5,18 +5,14 @@ export class Favourite {
   @Field(() => ID, { name: 'id' })
   _id: string;
 
-  @Field(() => ID)
+  @Field(() => ID, { nullable: true })
   userId: string;
 
-  @Field(() => [ID])
   bandsIds: string[];
 
-  @Field(() => [ID])
   genresIds: string[];
 
-  @Field(() => [ID])
   artistsIds: string[];
 
-  @Field(() => [ID])
   tracksIds: string[];
 }

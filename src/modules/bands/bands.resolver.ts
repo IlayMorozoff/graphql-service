@@ -15,12 +15,15 @@ import { UpdateBandInput } from './dto/update-band.input';
 import { PagingBandInput } from './dto/paging-band.input';
 import { Genre } from '../genres/entities/genre.entity';
 import { GenresService } from '../genres/genres.service';
+import { ArtistsService } from '../artists/artists.service';
+import { Member } from './entities/member.entity';
 
 @Resolver(() => Band)
 export class BandsResolver {
   constructor(
     private readonly bandsService: BandsService,
     private readonly genresService: GenresService,
+    private readonly artistsService: ArtistsService,
   ) {}
 
   @Mutation(() => Band)
@@ -69,5 +72,20 @@ export class BandsResolver {
     const { genresIds } = band;
 
     return Promise.all(genresIds.map((id) => this.genresService.findOne(id)));
+  }
+
+  @ResolveField('members', () => [Member], { nullable: 'itemsAndList' })
+  async getMembers(@Parent() band: Band) {
+    const { members } = band;
+
+    return (
+      await Promise.all(
+        members.map((member) => this.artistsService.findOne(member.id)),
+      )
+    ).map((artist, index) => ({
+      ...artist,
+      instrument: members[index].instrument,
+      years: members[index].years,
+    }));
   }
 }

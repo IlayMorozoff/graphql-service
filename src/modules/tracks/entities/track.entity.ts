@@ -11,10 +11,8 @@ export class Track extends DeletedTrack {
   @Field()
   title: string;
 
-  @Field({ nullable: true, name: 'albums' })
   albumId?: string;
 
-  @Field(() => [ID], { nullable: 'itemsAndList', name: 'bands' })
   bandsIds?: string[];
 
   @Field(() => Int, { nullable: true })
@@ -23,9 +21,7 @@ export class Track extends DeletedTrack {
   @Field(() => Int, { nullable: true })
   released?: number;
 
-  @Field(() => [ID], { nullable: 'itemsAndList', name: 'genres' })
   genresIds?: string[];
 
-  @Field(() => [ID], { nullable: 'itemsAndList', name: 'artists' })
   artistsIds?: string[];
 }

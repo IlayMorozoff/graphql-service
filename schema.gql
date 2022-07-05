@@ -27,12 +27,15 @@ type Artist {
   birthDate: String
   birthPlace: String
   country: String
-  bands: [Band]
   instruments: [ID]
+  bands: [Band]
 }
 
 type Member {
-  artist: String
+  id: ID!
+  firstName: String
+  SecondName: String
+  middleName: String
   instrument: String
   years: [String]
 }
@@ -69,11 +72,11 @@ type DeletedTrack {
 type Track {
   id: ID!
   title: String!
-  albums: [Album]
-  bands: [Band]
   duration: Int
   released: Int
+  bands: [Band]
   genres: [Genre]
+  albums: [Album]
   artists: [Artist]
 }
 
@@ -85,20 +88,20 @@ type Album {
   id: ID!
   name: String!
   released: Int
+  image: String
+  genres: [Genre]
   artists: [Artist]
   bands: [Band]
   tracks: [Track]
-  genres: [Genre]
-  image: String
 }
 
 type Favourite {
   id: ID!
-  userId: ID!
-  bandsIds: [ID!]!
-  genresIds: [ID!]!
-  artistsIds: [ID!]!
-  tracksIds: [ID!]!
+  userId: ID
+  bands: [Band]
+  genres: [Genre]
+  tracks: [Track]
+  artists: [Artist]
 }
 
 type Query {
@@ -214,7 +217,7 @@ input CreateBandInput {
 }
 
 input CreateMemberInput {
-  artist: String
+  id: ID!
   instrument: String
   years: [String]
 }

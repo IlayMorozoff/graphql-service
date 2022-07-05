@@ -21,6 +21,5 @@ export class Band extends DeletedBand {
   @Field({ nullable: true })
   website?: string;
 
-  @Field(() => [ID], { nullable: 'itemsAndList', name: 'genres' })
   genresIds?: string[];
 }

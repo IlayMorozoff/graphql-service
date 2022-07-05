@@ -14,16 +14,12 @@ export class Album extends DeletedAlbum {
   @Field(() => Int, { nullable: true })
   released?: number;
 
-  @Field(() => [ID], { nullable: 'itemsAndList', name: 'artists' })
   artistsIds?: string[];
 
-  @Field(() => [ID], { nullable: 'itemsAndList', name: 'bands' })
   bandsIds?: string[];
 
-  @Field(() => [ID], { nullable: 'itemsAndList', name: 'tracks' })
   trackIds?: string[];
 
-  @Field(() => [ID], { nullable: 'itemsAndList', name: 'genres' })
   genresIds?: string[];
 
   @Field({ nullable: true })

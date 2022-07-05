@@ -1,9 +1,9 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, ID } from '@nestjs/graphql';
 
 @InputType()
 export class CreateMemberInput {
-  @Field({ nullable: true })
-  artist?: string;
+  @Field(() => ID, { name: 'id' })
+  id?: string;
 
   @Field({ nullable: true })
   instrument?: string;

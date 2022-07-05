@@ -15,5 +15,6 @@ import { GenresService } from '../genres/genres.service';
     TracksService,
     GenresService,
   ],
+  exports: [AlbumsService],
 })
 export class AlbumsModule {}

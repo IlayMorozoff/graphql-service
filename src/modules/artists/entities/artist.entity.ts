@@ -26,7 +26,6 @@ export class Artist extends DeletedArtist {
   @Field({ nullable: true })
   country?: string;
 
-  @Field(() => [ID], { nullable: 'itemsAndList', name: 'bands' })
   bandsIds?: string[];
 
   @Field(() => [ID], { nullable: 'itemsAndList' })

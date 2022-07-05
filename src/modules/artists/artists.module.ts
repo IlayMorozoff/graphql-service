@@ -5,5 +5,6 @@ import { BandsService } from '../bands/bands.service';
 
 @Module({
   providers: [ArtistsResolver, ArtistsService, BandsService],
+  exports: [ArtistsService],
 })
 export class ArtistsModule {}
