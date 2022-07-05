@@ -34,7 +34,7 @@ type Artist {
 type Member {
   id: ID!
   firstName: String
-  SecondName: String
+  secondName: String
   middleName: String
   instrument: String
   years: [String]

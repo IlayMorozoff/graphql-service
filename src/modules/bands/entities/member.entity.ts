@@ -9,7 +9,7 @@ export class Member {
   firstName?: string;
 
   @Field({ nullable: true })
-  SecondName?: string;
+  secondName?: string;
 
   @Field({ nullable: true })
   middleName?: string;
