@@ -84,8 +84,9 @@ export class BandsResolver {
       )
     ).map((artist, index) => ({
       ...artist,
-      instrument: members[index].instrument,
-      years: members[index].years,
+      instrument: members[index].instrument ? members[index].instrument : null,
+      years: members[index].years ? members[index].years : null,
+      id: artist._id,
     }));
   }
 }
