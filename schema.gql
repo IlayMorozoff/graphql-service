@@ -1,0 +1,289 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Jwt {
+  jwt: String!
+}
+
+type User {
+  _id: ID!
+  firstName: String!
+  secondName: String!
+  middleName: String
+  password: String!
+  email: String!
+}
+
+type DeletedArtist {
+  id: ID!
+}
+
+type Artist {
+  id: ID!
+  firstName: String!
+  secondName: String!
+  middleName: String
+  birthDate: String
+  birthPlace: String
+  country: String
+  instruments: [ID]
+  bands: [Band]
+}
+
+type Member {
+  id: ID!
+  firstName: String
+  secondName: String
+  middleName: String
+  instrument: String
+  years: [String]
+}
+
+type DeletedBand {
+  id: ID!
+}
+
+type Band {
+  id: ID!
+  name: String!
+  origin: String
+  members: [Member]
+  website: String
+  genres: [Genre]
+}
+
+type DeletedGenre {
+  id: ID!
+}
+
+type Genre {
+  id: ID!
+  name: String!
+  description: String
+  country: String
+  year: Int
+}
+
+type DeletedTrack {
+  id: ID!
+}
+
+type Track {
+  id: ID!
+  title: String!
+  duration: Int
+  released: Int
+  bands: [Band]
+  genres: [Genre]
+  albums: [Album]
+  artists: [Artist]
+}
+
+type DeletedAlbum {
+  id: ID!
+}
+
+type Album {
+  id: ID!
+  name: String!
+  released: Int
+  image: String
+  genres: [Genre]
+  artists: [Artist]
+  bands: [Band]
+  tracks: [Track]
+}
+
+type Favourite {
+  id: ID!
+  userId: ID
+  bands: [Band]
+  genres: [Genre]
+  tracks: [Track]
+  artists: [Artist]
+}
+
+type Query {
+  user(id: String!): User!
+  artists(pagingArtistInput: PagingArtistInput): [Artist]
+  artist(id: String!): Artist!
+  bands(pagingBandInput: PagingBandInput): [Band]
+  band(id: String!): Band!
+  genres(pagingGenreInput: PagingGenreInput): [Genre]
+  genre(id: String!): Genre!
+  tracks(pagingTrackInput: PagingTrackInput): [Track]
+  track(id: String!): Track!
+  albums(pagingGenreInput: PagingAlbumInput): [Album]
+  album(id: String!): Album!
+  favourites: Favourite!
+}
+
+input PagingArtistInput {
+  limit: Int = 5
+  offset: Int = 0
+}
+
+input PagingBandInput {
+  limit: Int = 5
+  offset: Int = 0
+}
+
+input PagingGenreInput {
+  limit: Int = 5
+  offset: Int = 0
+}
+
+input PagingTrackInput {
+  limit: Int = 5
+  offset: Int = 0
+}
+
+input PagingAlbumInput {
+  limit: Int = 5
+  offset: Int = 0
+}
+
+type Mutation {
+  register(registerUserInput: RegisterUserInput!): User!
+  jwt(loginUserInput: LoginUserInput!): Jwt!
+  createArtist(createArtistInput: CreateArtistInput!): Artist!
+  updateArtist(updateArtistInput: UpdateArtistInput!): Artist!
+  deleteArtist(id: String!): DeletedArtist!
+  createBand(createBandInput: CreateBandInput!): Band!
+  updateBand(updateBandInput: UpdateBandInput!): Band!
+  deleteBand(id: String!): DeletedBand!
+  createGenre(createGenreInput: CreateGenreInput!): Genre!
+  updateGenre(updateGenreInput: UpdateGenreInput!): Genre!
+  deleteGenre(id: String!): DeletedGenre!
+  createTrack(createTrackInput: CreateTrackInput!): Track!
+  updateTrack(updateTrackInput: UpdateTrackInput!): Track!
+  deleteTrack(id: String!): DeletedTrack!
+  createAlbum(createAlbumInput: CreateAlbumInput!): Album!
+  updateAlbum(updateAlbumInput: UpdateAlbumInput!): Album!
+  deleteAlbum(id: String!): DeletedAlbum!
+  addTrackToFavourites(idTrack: String!): Favourite!
+  addBandToFavourites(idBand: String!): Favourite!
+  addArtistToFavourites(idArtist: String!): Favourite!
+  addGenreToFavourites(idGenre: String!): Favourite!
+  removeTrackFromFavourites(idTrack: String!): Favourite!
+  removeBandFromFavourites(idBand: String!): Favourite!
+  removeArtistFromFavourites(idArtist: String!): Favourite!
+  removeGenreFromFavourites(idGenre: String!): Favourite!
+}
+
+input RegisterUserInput {
+  firstName: String!
+  lastName: String!
+  middleName: String
+  password: String!
+  email: String!
+}
+
+input LoginUserInput {
+  password: String!
+  email: String!
+}
+
+input CreateArtistInput {
+  firstName: String!
+  secondName: String!
+  middleName: String
+  birthDate: String
+  birthPlace: String
+  country: String!
+  bandsIds: [ID!]
+  instruments: [ID!]
+}
+
+input UpdateArtistInput {
+  firstName: String
+  secondName: String
+  middleName: String
+  birthDate: String
+  birthPlace: String
+  country: String
+  bandsIds: [ID!]
+  instruments: [ID!]
+  id: ID!
+}
+
+input CreateBandInput {
+  name: String!
+  origin: String
+  members: [CreateMemberInput]
+  website: String
+  genresIds: [ID]
+}
+
+input CreateMemberInput {
+  id: ID!
+  instrument: String
+  years: [String]
+}
+
+input UpdateBandInput {
+  name: String
+  origin: String
+  members: [CreateMemberInput!]
+  website: String
+  genresIds: [ID!]
+  id: ID!
+}
+
+input CreateGenreInput {
+  name: String!
+  description: String
+  country: String
+  year: Int
+}
+
+input UpdateGenreInput {
+  name: String
+  description: String
+  country: String
+  year: Int
+  id: ID!
+}
+
+input CreateTrackInput {
+  title: String!
+  albumId: String
+  bandsIds: [ID]
+  artistsIds: [ID]
+  duration: Int
+  released: Int
+  genresIds: [ID]
+}
+
+input UpdateTrackInput {
+  title: String
+  albumId: String
+  bandsIds: [ID!]
+  artistsIds: [ID!]
+  duration: Int
+  released: Int
+  genresIds: [ID!]
+  id: ID!
+}
+
+input CreateAlbumInput {
+  name: String!
+  released: Int
+  artistsIds: [ID]
+  bandsIds: [ID]
+  trackIds: [ID]
+  genresIds: [ID]
+  image: String
+}
+
+input UpdateAlbumInput {
+  name: String
+  released: Int
+  artistsIds: [ID!]
+  bandsIds: [ID!]
+  trackIds: [ID!]
+  genresIds: [ID!]
+  image: String
+  id: ID!
+}
